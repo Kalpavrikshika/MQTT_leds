@@ -1,12 +1,12 @@
 import paho.mqtt.client as mqtt
 import RPi.GPIO as GPIO
 
-def on_connect(client, userdata, rc):
-    #print ("Connected with rc: " + str(rc))
+def on_connect(client, userdata, flags, rc):
+    print ("Connected with rc: " + str(rc))
     client.subscribe("paho/demo/led")
 
 def on_message(client, userdata, msg):
-    #print ("Topic: "+ msg.topic+"\nMessage: "+str(msg.payload))
+    print ("Topic: "+ msg.topic+"\nMessage: "+str(msg.payload))
     if "white" in msg.payload:
         #print("  Green on!")
         GPIO.output(13, True)
@@ -27,9 +27,9 @@ def on_message(client, userdata, msg):
         GPIO.output(12, False)
 
 username = "paho"
-password = "pahopassword"     
-client.username_pw_set(username, password=pahopassword)
+password_= "pahopassword"
 client = mqtt.Client("raspberrypi")
+client.username_pw_set(username, password=password_)
 client.on_connect = on_connect
 client.on_message = on_message
 
